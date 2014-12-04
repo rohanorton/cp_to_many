@@ -1,7 +1,7 @@
 cp_to_many
 ==========
 
-A \*nix commandline utility forcopying a single source file to multiple
+A \*nix commandline utility for copying a single source file to multiple
 destinations. 
 
 Presuming you've got ruby installed, just chuck it in your `PATH`
