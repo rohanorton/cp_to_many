@@ -54,11 +54,28 @@ rescue
 end
 
 for dest in dests
-    # TODO:
-    # need to assess dests to see if it contains special characters
-    # should probably accept something like...
-    #   my_dir/[name1,name2].ext
-    # which we can parse out
+    # assess dests to see if it contains special characters
+    # should accept something like...
+    #   my_dir/[[name1,name2]].ext
+
+    if dest.include? "[[" and dest.include? "]]" 
+        ## firstly... remove the matching text from the dest array
+        dests.delete(dest)
+
+        ## get inner and outer strings
+        outer_left_string, dest = dest.split("[[")
+        inner_string,outer_right_string = dest.split("]]")
+        
+        split_string = inner_string.split(",")
+
+        for i in split_string 
+            filename = "#{outer_left_string}#{i}#{outer_right_string}"
+            dests.push(filename)
+        end
+    end
+end
+
+for dest in dests
     if options[:recursive]
         FileUtils.cp_r(src, dest, cp_options)
     else
